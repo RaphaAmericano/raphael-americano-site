@@ -14,18 +14,7 @@ query pages {
       }
     }
   }
-query PageByPageIdQuery($pageId: Int) {
-  pageBy(pageId: $pageId) {
-    id
-    pageId
-    databaseId
-    slug
-    title
-    content
-    status
-    uri
-  }
-}
+
 
 query page($slug: ID!) {
   page(id: $slug, idType: URI) {

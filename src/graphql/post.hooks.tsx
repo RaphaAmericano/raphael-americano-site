@@ -9,10 +9,6 @@ export function usePagesQuery(options?: Omit<Urql.UseQueryArgs<Operations.PagesQ
   return Urql.useQuery<Operations.PagesQuery, Operations.PagesQueryVariables>({ query: Operations.PagesDocument, ...options });
 };
 
-export function usePageByPageIdQueryQuery(options?: Omit<Urql.UseQueryArgs<Operations.PageByPageIdQueryQueryVariables>, 'query'>) {
-  return Urql.useQuery<Operations.PageByPageIdQueryQuery, Operations.PageByPageIdQueryQueryVariables>({ query: Operations.PageByPageIdQueryDocument, ...options });
-};
-
 export function usePageQuery(options: Omit<Urql.UseQueryArgs<Operations.PageQueryVariables>, 'query'>) {
   return Urql.useQuery<Operations.PageQuery, Operations.PageQueryVariables>({ query: Operations.PageDocument, ...options });
 };

@@ -8,12 +8,13 @@
     "start": "next start",
     "lint": "next lint",
     "gqlcodegen": "npx graphql-codegen",
-    "codegen": "graphql-codegen --config codegen.yml",
-    "codegen:ts": "graphql-codegen --config codegen.ts"
+    "codegen": "graphql-codegen --require dotenv/config --config codegen.yml",
+    "codegen:ts": "graphql-codegen --require dotenv/config --config codegen.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.8.0-rc.2",
     "@apollo/experimental-nextjs-app-support": "^0.6.0",
+    "interweave": "^13.1.0",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18"

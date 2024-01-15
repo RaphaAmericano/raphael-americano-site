@@ -5,10 +5,11 @@ import { PagesQuery, PagesQueryVariables, PagesDocument } from "@/graphql/operat
 export const getPages = async () => {
     const { client } = getClient();
     const result = await client.query<PagesQuery, PagesQueryVariables>(PagesDocument, {})
-    const { data }= result
+
+    const { data } = result
     if(data?.pages){
         const { pages: { edges } } = data;
-        return edges
+        return edges.map(({ node }) => node )
     }
     return []
 }
