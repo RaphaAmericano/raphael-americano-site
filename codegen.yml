@@ -1,0 +1,16 @@
+overwrite: true
+schema: ${API_ENDPOINT}
+documents: 
+  - src/graphql/**/*.graphql
+generates:
+  src/graphql/types.gql.tsx:
+    plugins: 
+      - typescript
+      - typescript-operations
+      - typescript-urql
+#     config:
+#       withHooks: true
+
+# hooks:
+#   afterAllFileWrite:
+#     - eslint --fix

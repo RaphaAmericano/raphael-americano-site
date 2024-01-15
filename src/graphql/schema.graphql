@@ -1,0 +1,33 @@
+type Query {
+  pages: PagesConnection!
+  page(id: String!, idType: PageIdType!): Page
+}
+type PageConnection {
+  data: PageEdge!
+}
+
+type PagesConnection {
+  edges: [PageEdge!]!
+}
+
+type PageEdge {
+  node: Page!
+}
+
+type Page {
+  content: String!
+  date: String!
+  id: ID!
+  pageId: String!
+  status:String!
+  dateGmt: String!
+  guid: String!
+  link: String!
+  slug: String!
+  title: String!
+  uri: String!
+}
+
+enum PageIdType {
+  URI
+}

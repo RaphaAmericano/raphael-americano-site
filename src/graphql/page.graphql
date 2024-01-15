@@ -1,0 +1,30 @@
+query pages {
+    pages {
+      edges {
+        node {
+          content
+          date
+          id
+          link
+          slug
+          title
+          uri
+        }
+      }
+    }
+  }
+
+
+query page($slug: ID!) {
+  page(id: $slug, idType: URI) {
+    content
+    date
+    dateGmt
+    id
+    guid
+    slug
+    status
+    title
+    uri
+  }
+}
