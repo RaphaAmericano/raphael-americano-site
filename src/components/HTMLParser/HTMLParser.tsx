@@ -1,6 +1,5 @@
-import { Interweave, Markup } from "interweave"
+import parse from "html-react-parser"
 const  HTMLParser = ({ content }: { content: string }) => {
-    return <Markup content={content} />
+    return <>{parse(content)}</>
 }
-
 export default HTMLParser
