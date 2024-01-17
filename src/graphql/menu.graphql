@@ -1,0 +1,39 @@
+query GetMenus {
+  menus {
+    edges {
+      node {
+        id
+        menuId
+        name
+        slug
+        menuItems {
+          edges {
+            node {
+              title
+              id
+              uri
+            }
+          }
+        }
+      }
+    }
+  }
+}
+query GetMenu($id: ID!) {
+  menu(id: $id , idType: NAME) {
+    id
+    name
+    menuItems {
+      edges {
+        node {
+          id
+          title
+          uri
+          description
+          databaseId
+          label
+        }
+      }
+    }
+  }
+}

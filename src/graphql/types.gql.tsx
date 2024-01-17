@@ -10398,19 +10398,89 @@ export type WritingSettings = {
   useSmilies?: Maybe<Scalars['Boolean']['output']>;
 };
 
+export type GetMenusQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMenusQuery = { __typename?: 'RootQuery', menus?: { __typename?: 'RootQueryToMenuConnection', edges: Array<{ __typename?: 'RootQueryToMenuConnectionEdge', node: { __typename?: 'Menu', id: string, menuId?: number | null, name?: string | null, slug?: string | null, menuItems?: { __typename?: 'MenuToMenuItemConnection', edges: Array<{ __typename?: 'MenuToMenuItemConnectionEdge', node: { __typename?: 'MenuItem', title?: string | null, id: string, uri?: string | null } }> } | null } }> } | null };
+
+export type GetMenuQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GetMenuQuery = { __typename?: 'RootQuery', menu?: { __typename?: 'Menu', id: string, name?: string | null, menuItems?: { __typename?: 'MenuToMenuItemConnection', edges: Array<{ __typename?: 'MenuToMenuItemConnectionEdge', node: { __typename?: 'MenuItem', id: string, title?: string | null, uri?: string | null, description?: string | null, databaseId: number, label?: string | null } }> } | null } | null };
+
 export type PagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PagesQuery = { __typename?: 'RootQuery', pages?: { __typename?: 'RootQueryToPageConnection', edges: Array<{ __typename?: 'RootQueryToPageConnectionEdge', node: { __typename?: 'Page', content?: string | null, date?: string | null, id: string, link?: string | null, slug?: string | null, title?: string | null, uri?: string | null } }> } | null };
+export type PagesQuery = { __typename?: 'RootQuery', pages?: { __typename?: 'RootQueryToPageConnection', edges: Array<{ __typename?: 'RootQueryToPageConnectionEdge', node: { __typename?: 'Page', content?: string | null, date?: string | null, id: string, databaseId: number, link?: string | null, slug?: string | null, title?: string | null, uri?: string | null } }> } | null };
+
+export type PageByPageIdQueryQueryVariables = Exact<{
+  pageId?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type PageByPageIdQueryQuery = { __typename?: 'RootQuery', pageBy?: { __typename?: 'Page', id: string, pageId: number, databaseId: number, slug?: string | null, title?: string | null, content?: string | null, status?: string | null, uri?: string | null } | null };
 
 export type PageQueryVariables = Exact<{
   slug: Scalars['ID']['input'];
 }>;
 
 
-export type PageQuery = { __typename?: 'RootQuery', page?: { __typename?: 'Page', content?: string | null, date?: string | null, dateGmt?: string | null, id: string, guid?: string | null, slug?: string | null, status?: string | null, title?: string | null, uri?: string | null } | null };
+export type PageQuery = { __typename?: 'RootQuery', page?: { __typename?: 'Page', content?: string | null, date?: string | null, dateGmt?: string | null, id: string, databaseId: number, guid?: string | null, slug?: string | null, status?: string | null, title?: string | null, uri?: string | null } | null };
 
 
+export const GetMenusDocument = gql`
+    query GetMenus {
+  menus {
+    edges {
+      node {
+        id
+        menuId
+        name
+        slug
+        menuItems {
+          edges {
+            node {
+              title
+              id
+              uri
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+export function useGetMenusQuery(options?: Omit<Urql.UseQueryArgs<GetMenusQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetMenusQuery, GetMenusQueryVariables>({ query: GetMenusDocument, ...options });
+};
+export const GetMenuDocument = gql`
+    query GetMenu($id: ID!) {
+  menu(id: $id, idType: NAME) {
+    id
+    name
+    menuItems {
+      edges {
+        node {
+          id
+          title
+          uri
+          description
+          databaseId
+          label
+        }
+      }
+    }
+  }
+}
+    `;
+
+export function useGetMenuQuery(options: Omit<Urql.UseQueryArgs<GetMenuQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetMenuQuery, GetMenuQueryVariables>({ query: GetMenuDocument, ...options });
+};
 export const PagesDocument = gql`
     query pages {
   pages {
@@ -10419,6 +10489,7 @@ export const PagesDocument = gql`
         content
         date
         id
+        databaseId
         link
         slug
         title
@@ -10432,6 +10503,24 @@ export const PagesDocument = gql`
 export function usePagesQuery(options?: Omit<Urql.UseQueryArgs<PagesQueryVariables>, 'query'>) {
   return Urql.useQuery<PagesQuery, PagesQueryVariables>({ query: PagesDocument, ...options });
 };
+export const PageByPageIdQueryDocument = gql`
+    query PageByPageIdQuery($pageId: Int) {
+  pageBy(pageId: $pageId) {
+    id
+    pageId
+    databaseId
+    slug
+    title
+    content
+    status
+    uri
+  }
+}
+    `;
+
+export function usePageByPageIdQueryQuery(options?: Omit<Urql.UseQueryArgs<PageByPageIdQueryQueryVariables>, 'query'>) {
+  return Urql.useQuery<PageByPageIdQueryQuery, PageByPageIdQueryQueryVariables>({ query: PageByPageIdQueryDocument, ...options });
+};
 export const PageDocument = gql`
     query page($slug: ID!) {
   page(id: $slug, idType: URI) {
@@ -10439,6 +10528,7 @@ export const PageDocument = gql`
     date
     dateGmt
     id
+    databaseId
     guid
     slug
     status

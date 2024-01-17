@@ -10,5 +10,4 @@ export const getPages = async () => {
         const { pages: { edges } } = data;
         return edges.map(({ node }) => node )
     }
-    return null
 }
