@@ -1,27 +1,9 @@
-import { getClient } from "@/services/graphql"
-import { gql } from "@apollo/client"
-
-const query = gql`
-    query postQuery {
-        posts {
-            edges {
-            node {
-                date
-                authorId
-                id
-                slug
-                excerpt
-                content
-            }
-            }
-        }
-    }
-`
+import { getMenus } from "@/services/graphql"
 
 const handler = async () => {
-    const { data } = await getClient().query({ query })
-    console.log(data)
-    return data
+    const result = await getMenus()
+    console.log(result)
+    return result
 }
 
 

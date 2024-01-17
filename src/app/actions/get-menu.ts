@@ -1,6 +1,6 @@
 "use server"
-import { GetMenuQuery, GetMenuQueryVariables, GetMenuDocument } from "@/graphql/operations"
-import { getClient } from "@/services/graphql"
+
+import { getMenuByName } from "@/services/graphql/menu"
 
 type MenuItem = {
   id: string,
@@ -11,16 +11,18 @@ type MenuItem = {
   label: string,
 }
 
-export const getMenu = async (id:string) => {
-  const { client } = getClient()
-  const result = await client.query<GetMenuQuery, GetMenuQueryVariables>(GetMenuDocument, { id })
-  const { data } = result
-  if(data?.menu){
-    const { menu } = data
-    return menu.menuItems?.edges.map(({ node }) => {
-     const {__typename, ...props } = node 
-     return props
-    } ) as MenuItem[]
-  }
+export const getMenu = async (name:string) => {
+  const result = await getMenuByName(name)
+  console.log(result)
+
+  // const result = await client.query<GetMenuQuery, GetMenuQueryVariables>(GetMenuDocument, { id })
+  // const { data } = result
+  // if(data?.menu){
+  //   const { menu } = data
+  //   return menu.menuItems?.edges.map(({ node }) => {
+  //    const {__typename, ...props } = node 
+  //    return props
+  //   } ) as MenuItem[]
+  // }
   return []
 }
