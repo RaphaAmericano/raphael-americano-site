@@ -1,6 +1,27 @@
 import service from "./../http.service"
 import graphqlService from "./graphql.service"
 
+interface MenuItemNode {
+  node: {
+    id:string;
+    title: string | null;
+    uri: string;
+    description: string | null;
+    databaseId: number;
+    label: string;
+  }
+}
+
+interface GetMenu {
+  menu: {
+    id:string;
+    name: string;
+    menuItems:{
+      edges: MenuItemNode[]
+    }
+  }
+}
+
 async function getMenus(){
 
   const menus = await graphqlService.post("", 
@@ -32,9 +53,9 @@ async function getMenus(){
   return menus
 }
 
-async function getMenuByName(name:string){
+async function getMenuByName(name:string) {
 
-  const menus = await graphqlService.post("", 
+  const menus = await graphqlService.post<any, GetMenu>("", 
   {
     query: `query GetMenu {
       menu(id: "${name}" , idType: NAME) {
@@ -56,7 +77,6 @@ async function getMenuByName(name:string){
     }`
   }
   )
-
   return menus
 }
 

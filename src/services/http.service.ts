@@ -12,7 +12,7 @@ function parseResponse(response: AxiosResponse){
 }
 
 function handleResponseError(error: any){
-    console.error("graphql response error",error)
+    console.error(error)
     return error
 }
 
