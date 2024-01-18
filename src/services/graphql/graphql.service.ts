@@ -14,4 +14,8 @@ function parseError(error: unknown){
 
 graphqlService.interceptors.response.use(parseResponse, parseError)
 
+export function postQuery<T>(query: string){
+    return graphqlService.post<any, T>("", { query })
+}
+
 export default graphqlService

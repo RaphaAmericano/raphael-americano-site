@@ -1,4 +1,3 @@
-import service from "./../http.service"
 import graphqlService from "./graphql.service"
 
 interface MenuItemNode {
@@ -6,6 +5,7 @@ interface MenuItemNode {
     id:string;
     title: string | null;
     uri: string;
+    path: string;
     description: string | null;
     databaseId: number;
     label: string;
@@ -67,6 +67,7 @@ async function getMenuByName(name:string) {
               id
               title
               uri
+              path
               description
               databaseId
               label
