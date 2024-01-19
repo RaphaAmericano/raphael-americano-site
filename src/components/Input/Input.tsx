@@ -9,18 +9,17 @@ interface InputProps {
     variant?: "flat" | "bordered" | "faded" | "underlined";
     color?: "default" | "primary" | "secondary" | "success" | "warning" | "danger";
     errorMessage?: ReactNode;
+    defaultValue?: string;
 }
 
-const Input = ({ label, type = "text", variant = "bordered", color = "default", errorMessage = ""} : InputProps) => {
+const Input = ({  type = "text", variant = "bordered", color = "default", ...props } : InputProps) => {
   return (
     <NextUIInput
+      {...props}
       type={type}
-      label={label}
       variant={variant}
-      defaultValue="junior2nextui.org"
       isInvalid={true}
       color={color}
-      errorMessage={errorMessage}
       className="max-w-xs"
     />
   )

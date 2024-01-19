@@ -1,0 +1,11 @@
+import { z } from "zod";
+
+export const validationSchema = z.object({
+    email: z.string().trim().email({ message: "Email inválido."}),
+    name: z.string().trim().optional(),
+    message: z.string().trim()
+});
+
+export type ValidationSchema = z.infer<typeof validationSchema>;
+export type ValidationSchemaKeys = keyof ValidationSchema;
+
