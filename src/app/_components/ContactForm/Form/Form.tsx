@@ -1,10 +1,11 @@
 "use client"
-import Input from "@/components/Input";
-import Textarea from "@/components/Textarea";
-import { Button } from "@nextui-org/react";
+
+// import Textarea from "@/components/Textarea";
+import { Button, Input, Textarea } from "@nextui-org/react";
 import { useForm, Controller } from "react-hook-form";
 import { ValidationSchema, ValidationSchemaKeys, validationSchema } from "@/validations/contact.form.validation";
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react";
 const defaultValues:ValidationSchema = {
   email:"",
   name:"",
@@ -12,13 +13,16 @@ const defaultValues:ValidationSchema = {
 }
 
 const Form = () => {
-  const { control, handleSubmit } = useForm<ValidationSchema>({
+  const [loading, setLoading] = useState<boolean>(false)
+  const { control, handleSubmit, formState: { errors, isDirty } } = useForm<ValidationSchema>({
     defaultValues,
     resolver: zodResolver(validationSchema)
   });
 
   function submit(data:any){
+    setLoading(true)
     console.log(data)
+    setTimeout(() => setLoading(false), 5000)
   }
 
   function error(error:unknown){
@@ -27,57 +31,69 @@ const Form = () => {
   return (
         <form onSubmit={handleSubmit(submit, error)}>
           <Controller 
+            control={control}
             name="email"
-            rules={{ required: true }}
-            control={control}
-            render={(props) => {
-
-              const { 
-                fieldState: { invalid, isDirty, isTouched, error }, 
-                field: { value }
-              } = props;
-              // console.log("invalid", invalid)
-              // console.log("isDirty", isDirty)
-              // console.log("isTouched", isTouched)
-              // console.log("error", error)
-              console.log(value)
-              // console.log("email errors", errors)
+            rules={ { required: true }}
+            render={({ field, fieldState }) => {
+              const { onChange, onBlur }  = field;
+              const { invalid, isDirty, error } = fieldState              
               return <Input 
-                label="Email"
-                type="email" 
-                isInvalid={isTouched && invalid} 
-                errorMessage={error && error.message} />
-            }} 
-          />
-          <Controller 
+                      onChange={onChange}
+                      type="email"
+                      label="Email"   
+                      variant="bordered"
+                      defaultValue=""
+                      onBlur={onBlur}
+                      color={(invalid && isDirty) ? "danger" : "default" }
+                      isInvalid={invalid && isDirty }
+                      errorMessage={error && error.message}
+                      className="max-w-xs"
+                      />
+            }}
+           />
+           <Controller 
+            control={control}
             name="name"
-            rules={{ required: false }}
-            control={control}
-            render={(props) => {
-              const { formState: { errors }} = props;
-              const { name } = errors;
+            rules={ { required: false }}
+            render={({ field, fieldState }) => {
+              const { onChange, onBlur }  = field;
+              const { invalid, isDirty, error } = fieldState              
               return <Input 
-              label="Name"  
-              type="text" 
-              isInvalid={name !== undefined} 
-              errorMessage={name && name.message} />
-            }} 
-          />
-          <Controller 
-            name="message"
-            rules={{ required: true }}
+                      onChange={onChange}
+                      type="text"
+                      label="Nome"   
+                      variant="bordered"
+                      defaultValue=""
+                      onBlur={onBlur}
+                      color={(invalid && isDirty) ? "danger" : "default" }
+                      isInvalid={invalid && isDirty }
+                      errorMessage={error && error.message}
+                      className="max-w-xs"
+                      />
+            }}
+           />
+           <Controller 
             control={control}
-            render={(props) => {
-              const { formState: { errors }} = props;
-              const { message } = errors;
+            name="message"
+            rules={ { required: true }}
+            render={({ field, fieldState }) => {
+              const { onChange, onBlur }  = field;
+              const { invalid, isDirty, error } = fieldState              
               return <Textarea 
-                isInvalid={false}
-                label={"Mensagem"}  
-                // isInvalid={!(message === undefined)} 
-                errorMessage={message && message.message} />
-            }} 
-          />
-          <Button isDisabled={false} color="primary" isLoading={false} type="submit">Enviar</Button>
+                      onChange={onChange}
+                      label="Mensagem"   
+                      variant="bordered"
+                      defaultValue=""
+                      onBlur={onBlur}
+                      isInvalid={invalid && isDirty }
+                      color={(invalid && isDirty) ? "danger" : "default" }
+                      errorMessage={error && error.message}
+                      className="max-w-xs"
+                      />
+            }}
+           />
+          
+          <Button isDisabled={false} color="primary" isLoading={loading} type="submit">{loading ? "Enviando...": "Enviar"}</Button>
         </form>
   )
 }

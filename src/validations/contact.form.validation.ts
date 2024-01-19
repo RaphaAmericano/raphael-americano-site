@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const validationSchema = z.object({
     email: z.string().email({ message: "Email inválido."}),
-    name: z.string().trim().optional(),
+    name: z.string().trim(),
     message: z.string().trim()
 });
 
