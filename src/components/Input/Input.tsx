@@ -10,15 +10,14 @@ interface InputProps {
     color?: "default" | "primary" | "secondary" | "success" | "warning" | "danger";
     errorMessage?: ReactNode;
     defaultValue?: string;
+    isInvalid?: boolean;
 }
 
-const Input = ({  type = "text", variant = "bordered", color = "default", ...props } : InputProps) => {
+const Input = ({ variant = "bordered", color = "default", ...props } : InputProps) => {
   return (
     <NextUIInput
       {...props}
-      type={type}
       variant={variant}
-      isInvalid={true}
       color={color}
       className="max-w-xs"
     />

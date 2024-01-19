@@ -9,16 +9,15 @@ interface TextareaProps {
   type?: "text" | "email" | "tel" | "number";
   variant?: "flat" | "bordered" | "faded" | "underlined";
   color?: "default" | "primary" | "secondary" | "success" | "warning" | "danger";
-  isInvalid:boolean;
+  isInvalid?:boolean;
   isReadOnly?: boolean;
   errorMessage: ReactNode;
 }
 
-const Textarea = ({isInvalid = false,  ...props  }:TextareaProps) => {
+const Textarea = ({  ...props  }:TextareaProps) => {
   return (
     <NextUITextarea 
       {...props}
-      isInvalid={isInvalid}
       className="max-w-xs"
     />
   )

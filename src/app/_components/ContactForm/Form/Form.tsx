@@ -5,14 +5,14 @@ import { Button } from "@nextui-org/react";
 import { useForm, Controller } from "react-hook-form";
 import { ValidationSchema, ValidationSchemaKeys, validationSchema } from "@/validations/contact.form.validation";
 import { zodResolver } from "@hookform/resolvers/zod"
-const defaultValues = {
+const defaultValues:ValidationSchema = {
   email:"",
   name:"",
   message:""
 }
 
 const Form = () => {
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit } = useForm<ValidationSchema>({
     defaultValues,
     resolver: zodResolver(validationSchema)
   });
@@ -31,9 +31,22 @@ const Form = () => {
             rules={{ required: true }}
             control={control}
             render={(props) => {
-              const { formState: { errors }} = props;
-              const { email } = errors;
-              return <Input  label="Email"  type="email" errorMessage={email && email.message} />
+
+              const { 
+                fieldState: { invalid, isDirty, isTouched, error }, 
+                field: { value }
+              } = props;
+              // console.log("invalid", invalid)
+              // console.log("isDirty", isDirty)
+              // console.log("isTouched", isTouched)
+              // console.log("error", error)
+              console.log(value)
+              // console.log("email errors", errors)
+              return <Input 
+                label="Email"
+                type="email" 
+                isInvalid={isTouched && invalid} 
+                errorMessage={error && error.message} />
             }} 
           />
           <Controller 
@@ -42,7 +55,12 @@ const Form = () => {
             control={control}
             render={(props) => {
               const { formState: { errors }} = props;
-              return <Input  label="Name"  type="text"  errorMessage={errors.name && errors.name.message} />
+              const { name } = errors;
+              return <Input 
+              label="Name"  
+              type="text" 
+              isInvalid={name !== undefined} 
+              errorMessage={name && name.message} />
             }} 
           />
           <Controller 
@@ -51,10 +69,12 @@ const Form = () => {
             control={control}
             render={(props) => {
               const { formState: { errors }} = props;
+              const { message } = errors;
               return <Textarea 
                 isInvalid={false}
                 label={"Mensagem"}  
-                errorMessage={errors.message && errors.message.message} />
+                // isInvalid={!(message === undefined)} 
+                errorMessage={message && message.message} />
             }} 
           />
           <Button isDisabled={false} color="primary" isLoading={false} type="submit">Enviar</Button>
