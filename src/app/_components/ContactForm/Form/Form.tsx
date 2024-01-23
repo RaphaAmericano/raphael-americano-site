@@ -33,70 +33,7 @@ const Form = () => {
         <form onSubmit={handleSubmit(submit, error)}>
           <FormController control={control} label="Email" name="email" type="email"required={true} />
           <FormController control={control} label="Nome" name="text" type="email"required={false} />
-          <FormController control={control} label="Mensagem" name="message" required={true} component="Textarea" />
-          {/* <Controller 
-            control={control}
-            name="email"
-            rules={ { required: true }}
-            render={({ field, fieldState }) => {
-              const { onChange, onBlur }  = field;
-              const { invalid, isDirty, error } = fieldState              
-              return <Input 
-                      onChange={onChange}
-                      type="email"
-                      label="Email"   
-                      variant="bordered"
-                      defaultValue=""
-                      onBlur={onBlur}
-                      color={(invalid && isDirty) ? "danger" : "default" }
-                      isInvalid={invalid && isDirty }
-                      errorMessage={error && error.message}
-                      className="max-w-xs"
-                      />
-            }}
-           /> */}
-           {/* <Controller 
-            control={control}
-            name="name"
-            rules={ { required: false }}
-            render={({ field, fieldState }) => {
-              const { onChange, onBlur }  = field;
-              const { invalid, isDirty, error } = fieldState              
-              return <Input 
-                      onChange={onChange}
-                      type="text"
-                      label="Nome"   
-                      variant="bordered"
-                      defaultValue=""
-                      onBlur={onBlur}
-                      color={(invalid && isDirty) ? "danger" : "default" }
-                      isInvalid={invalid && isDirty }
-                      errorMessage={error && error.message}
-                      className="max-w-xs"
-                      />
-            }}
-           /> */}
-           {/* <Controller 
-            control={control}
-            name="message"
-            rules={ { required: true }}
-            render={({ field, fieldState }) => {
-              const { onChange, onBlur }  = field;
-              const { invalid, isDirty, error } = fieldState              
-              return <Textarea 
-                      onChange={onChange}
-                      label="Mensagem"   
-                      variant="bordered"
-                      defaultValue=""
-                      onBlur={onBlur}
-                      isInvalid={invalid && isDirty }
-                      color={(invalid && isDirty) ? "danger" : "default" }
-                      errorMessage={error && error.message}
-                      className="max-w-xs"
-                      />
-            }}
-           /> */}
-          
+          <FormController control={control} label="Mensagem" name="message" required={true} component="Textarea" />          
           <Button isDisabled={false} color="primary" isLoading={loading} type="submit">{loading ? "Enviando...": "Enviar"}</Button>
         </form>
   )
