@@ -1,15 +1,16 @@
 import { getSettings } from "@/app/actions/get-settings";
-import { NavbarBrand } from "@nextui-org/react";
+import { NavbarBrand, NavbarContent } from "@nextui-org/react";
+import Link from "next/link";
 
 async function MainNavbarBrand() {
   const settings = await getSettings()
   const { generalSettingsTitle } = settings
 
-  return (
-    <NavbarBrand>
-        {generalSettingsTitle}<p className="font-bold text-inherit">{generalSettingsTitle}</p>
-    </NavbarBrand>
-  )
+  return  <NavbarBrand as={"div"}>
+                  <Link className="font-bold text-inherit" href="/">{generalSettingsTitle}</Link>
+              </NavbarBrand>
+          
+  
 }
 
 export default MainNavbarBrand

@@ -1,32 +1,32 @@
-query pages {
-    pages {
-      edges {
-        node {
-          content
-          date
-          id
-          databaseId
-          link
-          slug
-          title
-          uri
-        }
-      }
+query posts {
+  posts {
+    nodes {
+      content
+      date
+      id
+      guid
+      postId
+      slug
+      status
+      title
+      uri
+      excerpt
     }
   }
-
-
-query page($slug: ID!) {
-  page(id: $slug, idType: URI) {
-    content
-    date
-    dateGmt
-    id
-    databaseId
-    guid
-    slug
-    status
-    title
-    uri
-  }
 }
+
+
+# query page($slug: ID!) {
+#   page(id: $slug, idType: URI) {
+#     content
+#     date
+#     dateGmt
+#     id
+#     databaseId
+#     guid
+#     slug
+#     status
+#     title
+#     uri
+#   }
+# }

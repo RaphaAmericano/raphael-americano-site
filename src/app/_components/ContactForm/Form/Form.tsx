@@ -1,11 +1,12 @@
 "use client"
-import Input from "@/components/Input";
-import { Button } from "@nextui-org/react";
-import { useForm, Controller } from "react-hook-form";
-import { validationSchema,  ValidationSchema } from "./Form.validation";
-import { zodResolver } from "@hookform/resolvers/zod"
-import Textarea from "@/components/Textarea/Textarea";
 
+// import Textarea from "@/components/Textarea";
+import { Button, Input, Textarea } from "@nextui-org/react";
+import { useForm, Controller } from "react-hook-form";
+import { ValidationSchema, ValidationSchemaKeys, validationSchema } from "@/validations/contact.form.validation";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react";
+import FormController from "./FormController";
 const defaultValues:ValidationSchema = {
   email:"",
   name:"",
@@ -13,50 +14,28 @@ const defaultValues:ValidationSchema = {
 }
 
 const Form = () => {
-  const { control, handleSubmit } = useForm<ValidationSchema>({
-    resolver: zodResolver(validationSchema),
-    defaultValues
+  const [loading, setLoading] = useState<boolean>(false)
+  const { control, handleSubmit, formState: { errors, isDirty } } = useForm<ValidationSchema>({
+    defaultValues,
+    resolver: zodResolver(validationSchema)
   });
-  const onSubmit = (data:any) => console.log(data)
-  const onError = (error:any) => console.log(error)
-  // TODO componentizar um input controller e um textarea controller
+
+  function submit(data:any){
+    setLoading(true)
+    console.log(data)
+    setTimeout(() => setLoading(false), 5000)
+  }
+
+  function error(error:unknown){
+    console.error(error)
+  }
+  
   return (
-        <form onSubmit={handleSubmit(onSubmit, onError)}>
-          <Controller 
-            name="email"
-            control={control}
-            render={(props) => {
-              
-              const { fieldState, } = props;
-              const { invalid, isTouched, isDirty, error } = fieldState;
-              console.log(error)
-              return <Input  label="Email"  type="email"  errorMessage={null} />
-            }} 
-          />
-           <Controller 
-            name="name"
-            control={control}
-            render={(props) => {
-              
-        
-              const { field, fieldState, formState } = props;
-
-              return <Input  label="Nome"  type="text"  errorMessage={""} />
-            }} 
-          />
-
-          <Controller 
-            name="message"
-            control={control}
-            render={(props) => {
-              
-              const { field, fieldState, formState } = props;
-
-              return <Textarea />
-            }} 
-          />
-          
-          <Button isDisabled={false} color="primary" isLoading={false}>Enviar</Button>
+        <form onSubmit={handleSubmit(submit, error)}>
+          <FormController control={control} label="Email" name="email" type="email"required={true} />
+          <FormController control={control} label="Nome" name="text" type="email"required={false} />
+          <FormController control={control} label="Mensagem" name="message" required={true} component="Textarea" />          
+          <Button isDisabled={false} color="primary" isLoading={loading} type="submit">{loading ? "Enviando...": "Enviar"}</Button>
         </form>
   )
 }

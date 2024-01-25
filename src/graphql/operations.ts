@@ -33,6 +33,11 @@ export type PageQueryVariables = Types.Exact<{
 
 export type PageQuery = { __typename?: 'RootQuery', page?: { __typename?: 'Page', content?: string | null, date?: string | null, dateGmt?: string | null, id: string, databaseId: number, guid?: string | null, slug?: string | null, status?: string | null, title?: string | null, uri?: string | null } | null };
 
+export type PostsQueryVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+export type PostsQuery = { __typename?: 'RootQuery', posts?: { __typename?: 'RootQueryToPostConnection', nodes: Array<{ __typename?: 'Post', content?: string | null, date?: string | null, id: string, guid?: string | null, postId: number, slug?: string | null, status?: string | null, title?: string | null, uri?: string | null, excerpt?: string | null }> } | null };
+
 
 export const GetMenusDocument = gql`
     query GetMenus {
@@ -122,6 +127,24 @@ export const PageDocument = gql`
     status
     title
     uri
+  }
+}
+    `;
+export const PostsDocument = gql`
+    query posts {
+  posts {
+    nodes {
+      content
+      date
+      id
+      guid
+      postId
+      slug
+      status
+      title
+      uri
+      excerpt
+    }
   }
 }
     `;
